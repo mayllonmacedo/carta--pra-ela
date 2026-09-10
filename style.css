@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #35102b, #160914 70%);
+    font-family: Georgia, 'Times New Roman', serif;
+    overflow-x: hidden;
+    color: #3d1b2b;
+}
+
+/* Fundo */
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Envelope */
+
+.envelope {
+    width: 320px;
+    height: 210px;
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.4s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-8px);
+}
+
+.envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #b91c56;
+    border-radius: 5px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    z-index: 3;
+}
+
+.envelope-front::before,
+.envelope-front::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.envelope-front::before {
+    left: 0;
+    border-width: 105px 160px 0 0;
+    border-color: #8f1544 transparent transparent transparent;
+}
+
+.envelope-front::after {
+    right: 0;
+    border-width: 105px 0 0 160px;
+    border-color: #8f1544 transparent transparent transparent;
+}
+
+/* Aba do envelope */
+
+.flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #d62b68;
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 4;
+}
+
+/* Carta escondida */
+
+.letter-preview {
+    position: absolute;
+    background: #fff8ef;
+    width: 85%;
+    height: 90%;
+    left: 7.5%;
+    top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: #a71950;
+    z-index: 2;
+    border-radius: 3px;
+}
+
+/* Quando abre */
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open {
+    transform: translateY(-30px);
+}
+
+.instruction {
+    margin-top: 25px;
+    color: #ffd5e4;
+    font-size: 17px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Carta */
+
+.letter {
+    display: none;
+    width: min(700px, 94vw);
+    margin-top: 25px;
+    background: #fffaf2;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+    animation: appear 1.2s ease forwards;
+}
+
+.letter::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(170, 30, 80, 0.25);
+    pointer-events: none;
+}
+
+.letter-content {
+    padding: 55px 50px;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.letter h1 {
+    text-align: center;
+    color: #a71950;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.letter p {
+    margin-bottom: 20px;
+}
+
+.letter strong {
+    color: #a71950;
+}
+
+.final-message {
+    font-size: 18px;
+}
+
+.signature {
+    margin-top: 35px;
+    text-align: right;
+    color: #8f1544;
+    font-size: 18px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Corações */
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    font-size: 20px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Celular */
+
+@media (max-width: 600px) {
+
+    .envelope {
+        width: 290px;
+        height: 190px;
+    }
+
+    .letter-content {
+        padding: 40px 28px;
+        font-size: 16px;
+    }
+
+    .letter h1 {
+        font-size: 25px;
+    }
+
+    .final-message {
+        font-size: 17px;
+    }
+}
